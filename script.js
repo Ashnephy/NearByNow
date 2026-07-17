@@ -337,4 +337,64 @@ function init() {
     });
     
     elements.radiusSearch.addEventListener('keypress', (e) => {
-        if (
+        if (e.key === 'Enter') searchRadius(e.target.value);
+    });
+    
+    elements.distanceBtn.addEventListener('click', () => {
+        calculateDistance(elements.fromCity.value, elements.toCity.value);
+    });
+    
+    elements.fromCity.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') calculateDistance(elements.fromCity.value, elements.toCity.value);
+    });
+    
+    elements.toCity.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') calculateDistance(elements.fromCity.value, elements.toCity.value);
+    });
+    
+    elements.tabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+            switchTab(btn.dataset.tab);
+        });
+    });
+    
+    elements.quickBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const current = elements.radiusSearch.value;
+            const time = btn.dataset.time;
+            const match = current.match(/(\d+)\s*(?:min|minutes?)\s*(?:from|near)\s*(.+)/i);
+            if (match) {
+                const location = match[2];
+                elements.radiusSearch.value = `${time} min from ${location}`;
+                searchRadius(elements.radiusSearch.value);
+            } else {
+                // If no existing search, set default
+                elements.radiusSearch.value = `${time} min from Dallas, TX`;
+                searchRadius(elements.radiusSearch.value);
+            }
+        });
+    });
+    
+    // ===== Keyboard Shortcuts =====
+    document.addEventListener('keydown', (e) => {
+        // Ctrl+K to focus search
+        if (e.ctrlKey && e.key === 'k') {
+            e.preventDefault();
+            elements.radiusSearch.focus();
+        }
+    });
+    
+    console.log('🌊 NearByNow initialized!');
+    console.log(`📊 Loaded ${state.data.length} cities`);
+    console.log(`🔥 ${state.streak.days}-day streak`);
+}
+
+// ===== Start the App =====
+document.addEventListener('DOMContentLoaded', init);
+
+// ===== Handle Errors =====
+window.addEventListener('error', (e) => {
+    console.error('NearByNow Error:', e.message);
+    elements.loadingOverlay.classList.remove('active');
+    showError('Something went wrong. Please try again.');
+});
