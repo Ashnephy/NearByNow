@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NearByNow - Find Cities Near You</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <span class="wave">🌊</span>
+                <h1>NearByNow</h1>
+            </div>
+            <div class="header-right">
+                <div class="streak-badge" id="streakBadge">🔥 0-Day Streak</div>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+            </div>
+        </header>
+
+        <!-- Tabs -->
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="radius">Find Cities</button>
+            <button class="tab-btn" data-tab="distance">Distance Calculator</button>
+        </nav>
+
+        <!-- Tab 1: Radius Search -->
+        <section id="radiusTab" class="tab-content active">
+            <div class="search-container">
+                <div class="input-group">
+                    <input type="text" id="radiusSearch" placeholder="e.g., 15 min from Dallas, TX" autocomplete="off">
+                    <button id="radiusBtn" class="btn-primary">Find Cities →</button>
+                </div>
+                <div class="quick-actions">
+                    <button class="quick-btn" data-time="5">5 min</button>
+                    <button class="quick-btn" data-time="10">10 min</button>
+                    <button class="quick-btn" data-time="15">15 min</button>
+                    <button class="quick-btn" data-time="30">30 min</button>
+                    <button class="quick-btn" data-time="45">45 min</button>
+                    <button class="quick-btn" data-time="60">60 min</button>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="resultsContainer">
+                <div id="resultsList" class="results-list"></div>
+                <div id="searchHistory" class="search-history"></div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Distance Calculator -->
+        <section id="distanceTab" class="tab-content">
+            <div class="distance-container">
+                <div class="input-group">
+                    <input type="text" id="fromCity" placeholder="From: Dallas, TX" autocomplete="off">
+                    <span class="arrow">→</span>
+                    <input type="text" id="toCity" placeholder="To: Austin, TX" autocomplete="off">
+                </div>
+                <button id="distanceBtn" class="btn-primary">Calculate Distance →</button>
+                <div id="distanceResult" class="distance-result"></div>
+            </div>
+        </section>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <p>Finding nearby cities...</p>
+        </div>
+    </div>
+
+    <!-- Load data first, then app -->
+    <script src="data/cities.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
